@@ -1,4 +1,6 @@
 # 计算管道隔声套在各频段中心频率的插入损失，并输出 插入损失-频率 折线图，为了与标准隔声等级比较，同时输出了标准隔声等级最小插入损失。
+# 该程序的使用方法：在本文件的“# 常量及隔声套的几何参数、材料参数、声波频带中心频率”一段里设置需要的变量，在终端(Terminal)里输入“python<"IL_of_pipe_lagging(Hale+Michelsen).py" > printout.txt”即可
+# 输出的文件有：①图片 IL.png；②文本 printout.txt
 # 主要参考：[Engineering Noise Control] 4th p429-431,[GB/T 31013-2014 声学 管道、阀门和法兰的隔声] p19 附录A
 # 版本：20190829
 # 魏里来 weililai@foxmail.com
@@ -50,7 +52,7 @@ while i <7 :
 
 # 输出各物理量及插入损失 IL
 print("T , c , E , niu , rho , D , l , h2 , h3 , d , m2 , m3 , m :")
-print(T,c,E,niu,rho,D,l,h2,h3,d,m2,m3,m)
+print(round(T,4),round(c,4),round(E,4),round(niu,4),round(rho,4),round(D,4),round(l,4),round(h2,4),round(h3,4),round(d,4),round(m2,4),round(m3,4),round(m,4))
 print("            ")
 #print(B,m,c_L,f_r,f_c,xi_r,X_r,)
 #print("            ")
@@ -127,7 +129,9 @@ print("C3 = ",C3,"dB")
 
 # 作隔声量与频率的关系图
 fstr = [str(f[i]) for i in range(len(f))]  #倍频程数值转字符串，方便在坐标轴上均匀排布（倍频程在普通线性递增坐标轴上刻度不均匀）
-plt.plot(fstr, IL, label='IL')
+label_str = "IL (lagging Φ=" + str(round(d,4)) + "m ,φ=" + str(round(D,1)) + "m)"
+plt.title("IL of pipe lagging")
+plt.plot(fstr, IL, label=label_str,marker='o')
 if D <0.3 :
     plt.plot(fstr, A1, label='A1')
     plt.plot(fstr, B1, label='B1')
@@ -143,7 +147,6 @@ if D >=0.65 and D <1 :
 plt.legend() # 给曲线添加图例
 plt.xlabel('Frequency / Hz')
 plt.ylabel('Insertion loss (IL) / dB')
-plt.title("IL of pipe lagging")
 #plt.show()
 plt.savefig('IL.png')
 
