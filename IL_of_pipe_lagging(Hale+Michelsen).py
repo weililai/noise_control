@@ -4,7 +4,7 @@
 # 魏里来 weililai@foxmail.com
 
 import numpy as np
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 # 常量及隔声套的几何参数、材料参数、声波频带中心频率
 pi = 3.141592654  #圆周率
@@ -124,7 +124,7 @@ print("C1 = ",C1,"dB")
 print("C2 = ",C2,"dB")
 print("C3 = ",C3,"dB")
 
-'''
+
 # 作隔声量与频率的关系图
 fstr = [str(f[i]) for i in range(len(f))]  #倍频程数值转字符串，方便在坐标轴上均匀排布（倍频程在普通线性递增坐标轴上刻度不均匀）
 plt.plot(fstr, IL, label='IL')
@@ -146,6 +146,5 @@ plt.ylabel('Insertion loss (IL) / dB')
 plt.title("IL of pipe lagging")
 #plt.show()
 plt.savefig('IL.png')
-return 0
-'''
+
 exit(0)
