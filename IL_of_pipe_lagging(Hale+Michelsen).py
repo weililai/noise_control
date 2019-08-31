@@ -1,5 +1,5 @@
 # 计算管道隔声套在各频段中心频率的插入损失，并输出 插入损失-频率 折线图，为了与标准隔声等级比较，同时输出了标准隔声等级最小插入损失。
-# 该程序的使用方法：在本文件的“# 常量及隔声套的几何参数、材料参数、声波频带中心频率”一段里设置需要的变量，在终端(Terminal)里输入“python<"IL_of_pipe_lagging(Hale+Michelsen).py" > printout.txt”即可
+# 该程序的使用方法：在本文件的“# 常量及隔声套的几何参数、材料参数、声波频带中心频率”一段里设置需要的变量，在终端(Terminal)里输入“python<"IL_of_pipe_lagging(Hale+Michelsen).py" >level_report.txt”即可
 # 输出的文件有：①图片 IL.png；②文本 printout.txt
 # 主要参考：[Engineering Noise Control] 4th p429-431,[GB/T 31013-2014 声学 管道、阀门和法兰的隔声] p19 附录A
 # 版本：20190829
@@ -53,10 +53,10 @@ while i <7 :
 # 输出各物理量及插入损失 IL
 print("T , c , E , niu , rho , D , l , h2 , h3 , d , m2 , m3 , m :")
 print(round(T,4),round(c,4),round(E,4),round(niu,4),round(rho,4),round(D,4),round(l,4),round(h2,4),round(h3,4),round(d,4),round(m2,4),round(m3,4),round(m,4))
-print("            ")
+print(" ")
 #print(B,m,c_L,f_r,f_c,xi_r,X_r,)
-#print("            ")
-print("Insertion loss (IL):")
+#print(" ")
+print("Insertion loss (IL) :")
 np.set_printoptions(formatter={'float': '{: 0.1f}'.format})  #设定输出的数值保留一位小数
 print("f  = ",f,"Hz")
 print("IL = ",IL,"dB")
@@ -116,6 +116,8 @@ while j < 7 :
         C3[j] = 13.5*np.log10(f[j]/f0)-10.5
     j += 1
 # 输出各隔声等级要求的最小插入损失
+print(" ")
+print("Minimum insertion loss required for each class :")
 print("A1 = ",A1,"dB")
 print("A2 = ",A2,"dB")
 print("A3 = ",A3,"dB")
@@ -127,27 +129,50 @@ print("C2 = ",C2,"dB")
 print("C3 = ",C3,"dB")
 
 
-# 作隔声量与频率的关系图
+# 作隔声量与频率的关系图，并判断该管套所属的隔声等级
 fstr = [str(f[i]) for i in range(len(f))]  #倍频程数值转字符串，方便在坐标轴上均匀排布（倍频程在普通线性递增坐标轴上刻度不均匀）
 label_str = "IL (lagging Φ=" + str(round(d,4)) + "m ,φ=" + str(round(D,1)) + "m)"
 plt.title("IL of pipe lagging")
+level = "level(A/B/C)"
 plt.plot(fstr, IL, label=label_str,marker='o')
 if D <0.3 :
     plt.plot(fstr, A1, label='A1')
     plt.plot(fstr, B1, label='B1')
     plt.plot(fstr, C1, label='C1')
+    if np.all(IL-A1 >0) :
+        level = "A1"
+    if np.all(IL-B1 >0) :
+        level = "B1"
+    if np.all(IL-C1 >0) :
+        level = "C1"
 if D >=0.3 and D <0.65 :
     plt.plot(fstr, A2, label='A2')
     plt.plot(fstr, B2, label='B2')
     plt.plot(fstr, C2, label='C2')
+    if np.all(IL-A2 >0) :
+        level = "A2"
+    if np.all(IL-B2 >0) :
+        level = "B2"
+    if np.all(IL-C2 >0) :
+        level = "C2"
 if D >=0.65 and D <1 :
     plt.plot(fstr, A3, label='A3')
     plt.plot(fstr, B3, label='B3')
     plt.plot(fstr, C3, label='C3')
+    if np.all(IL-A3 >0) :
+        level = "A3"
+    if np.all(IL-B3 >0) :
+        level = "B3"
+    if np.all(IL-C3 >0) :
+        level = "C3"
+print(" ")
+print("Level of this lagging :")
+print(level)
+
 plt.legend() # 给曲线添加图例
 plt.xlabel('Frequency / Hz')
 plt.ylabel('Insertion loss (IL) / dB')
 #plt.show()
-plt.savefig('IL.png')
+plt.savefig('IL of pipe lagging.png')
 
 exit(0)
