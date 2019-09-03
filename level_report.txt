@@ -1,9 +1,9 @@
 1. T , c , E , niu , rho , ¦Õ , l , h2 , h3 , ¦µ , m2 , m3 , m :
-    20 , 343.0 , 69000000000 , 0.34 , 2700.0 , 0.3 , 0.1 , 0.01 , 0.0003 , 0.5206 , 2 , 0.81 , 2.81
+   20 , 343.0 , 69000000000 , 0.34 , 2700.0 , 0.368 , 0.06 , 0.003 , 0.001 , 0.496 , 4 , 2.7 , 6.7
  
 2. Insertion loss (IL) :
    f  =  [ 125  250  500 1000 2000 4000 8000] Hz
-   IL =  [-4.8  4.0  8.6  17.3  25.9  34.5  43.1] dB
+   IL =  [-0.8  5.4  17.5  26.6  35.6  44.7  53.8] dB
  
 3. Minimum insertion loss required for each class :
    A1 =  [-4.0 -4.0  2.4  9.0  15.6  22.2  28.9] dB
@@ -17,4 +17,14 @@
    C3 =  [ 1.1  9.2  17.4  25.5  33.6  38.1  42.2] dB
  
 4. Level of this lagging :
-   B2
+   C2
+ 
+5. noise reduction estimate:
+   noise_before :     [ 71.1  67.3  73.9  84.1  91.5  93.2  88.4] dB
+   noise_before_dBA : [ 55.0  58.7  70.7  84.1  92.7  94.2  87.3] dBA
+   IL :               [-0.8  5.4  17.5  26.6  35.6  44.7  53.8] dB
+   noise_after :      [ 71.9  61.9  56.4  57.5  55.9  48.5  34.6] dB
+   noise_after_dBA :  [ 55.8  53.3  53.2  57.5  57.1  49.5  33.5] dBA
+   noise_before_dBA_total :    97.2 dBA
+   noise_after_dBA_total :     63.0 dBA
+   noise_reduction_dBA_total : 34.3 dBA

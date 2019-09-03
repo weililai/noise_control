@@ -1,4 +1,4 @@
-# 把屏幕输出文本、保存的图片写入到可作为报告的word文档中
+# 本程序功能：把屏幕输出文本、保存的图片写入到可作为报告的word文档中，已有“level_report.txt”文件 才能运行本程序
 from docx import Document
 from docx.shared import Inches, Pt
 
