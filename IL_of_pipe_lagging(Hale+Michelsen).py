@@ -4,7 +4,7 @@
   在终端(Terminal)里输入“python<"IL_of_pipe_lagging(Hale+Michelsen).py" >level_report.txt”,回车
 # 输出的文件有：①图片 IL of pipe lagging.png；②文本 level_report.txt
 # 主要参考：①[Engineering Noise Control] 4th p429-431；②[GB/T 31013-2014 声学 管道、阀门和法兰的隔声] p19 附录A
-# 版本：20190903
+# 版本：20191103
 # 魏里来 weililai@foxmail.com
 '''
 
