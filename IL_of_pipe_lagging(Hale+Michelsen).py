@@ -1,11 +1,11 @@
-# 计算管道隔声套在各频段中心频率的插入损失，并输出 插入损失-频率 折线图，为了与标准隔声等级比较，同时输出了标准隔声等级最小插入损失，最后判断该隔声套隔声级别。
+# IL_of_pipe_lagging(Hale+Michelsen),可以计算管道隔声套在各频段中心频率的插入损失，并输出 插入损失-频率 折线图，为了与标准隔声等级比较，同时输出了标准隔声等级最小插入损失，最后判断该隔声套隔声级别。物理量使用国际SI国际单位制
 '''
 # 该程序的使用方法：在本文件的“# 常量及隔声套的几何参数、材料参数、声波频带中心频率”一段里设置需要的变量;
   在终端(Terminal)里输入“python<"IL_of_pipe_lagging(Hale+Michelsen).py" >level_report.txt”,回车
 # 输出的文件有：①图片 IL of pipe lagging.png；②文本 level_report.txt
 # 主要参考：①[Engineering Noise Control] 4th p429-431；②[GB/T 31013-2014 声学 管道、阀门和法兰的隔声] p19 附录A
-# 版本：20190903
-# 魏里来 weililai@foxmail.com
+# 版本：20191103
+# 作者：魏里来 weililai@foxmail.com
 '''
 
 import numpy as np
@@ -36,7 +36,7 @@ f_r = c_L/pi/d  #铝壳环频率
 f_c = c*c/2/pi*(m3/B)**0.5  #铝壳临界频率
 
 
-# 下面计算隔声套在各频段中心频率的插入损失,公式来源：[[Engineering Noise Control] p429-413 8.6.2]
+# 下面计算隔声套在各频段中心频率的插入损失,公式来源：[[Engineering Noise Control] 4th p429-431 8.6.2]
 # IL = 10*np.log10(1-0.012*X_r*np.sin(2*C_r)+(0.012*X_r*np.sin(C_r))**2)  #300Hz以下插入损失IL公式，在使用时还增添了阻尼作用的附加插入损失
 # IL = (40/(1+0.12/D))*np.log10((f*(m*l)**0.5)/132)  #300Hz以上IL公式，在使用时还增添了阻尼作用的附加插入损失
 IL = np.zeros(7)
