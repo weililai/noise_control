@@ -1,10 +1,10 @@
 # IL_of_pipe_lagging(Hale+Michelsen),可以计算管道隔声套在各频段中心频率的插入损失，并输出 插入损失-频率 折线图，为了与标准隔声等级比较，同时输出了标准隔声等级最小插入损失，最后判断该隔声套隔声级别。物理量使用国际SI国际单位制
 '''
 # 该程序的使用方法：在本文件的“# 常量及隔声套的几何参数、材料参数、声波频带中心频率”一段里设置需要的变量;
-  在终端(Terminal)里输入“python<"IL_of_pipe_lagging(Hale+Michelsen).py" >level_report.txt”,回车
+  在终端(Terminal)里输入“python<"IL_of_pipe_lagging(Hale+Michelsen)_haier_20200110.py" >level_report.txt”,回车
 # 输出的文件有：①图片 IL of pipe lagging.png；②文本 level_report.txt
 # 主要参考：①[Engineering Noise Control] 4th p429-431；②[GB/T 31013-2014 声学 管道、阀门和法兰的隔声] p19 附录A
-# 版本：20200110
+# 版本：20191103
 # 作者：魏里来 weililai@foxmail.com
 '''
 
@@ -33,7 +33,7 @@ equipment_noise_correction = centrifugal_compressor_correction #选择连接设�
 noise_before_dBA_total = np.array([0])
 if len(noise_before_input) == 1:
     noise_before_dBA_total = noise_before_input
-    noise_before = noise_before_dBA_total - equipment_noise_correction # 如果实测噪声输入值为单一的A计权值（dBA），该行会根据选择的连接设备来将噪声A计权总值展开为倍频程线性谱噪声
+    noise_before = noise_before_dBA_total - equipment_noise_correction # 如果实测噪声输入值为单一的A计权值（dBA），该行会根据选择的连接设备来将噪声A计权总值展开为线性谱
 else :
     noise_before = noise_before_input #如果实测噪声输入值不是单一值（是7分量向量），输入即为倍频程线性谱噪声
 # 设定内容到此为止
@@ -67,8 +67,6 @@ while i <7 :
     i += 1
 
 # 输出各设定的物理量及插入损失 IL
-print("Prediction of sound insulation performance of Pipe lagging")
-print(" ")
 print("1. T , c , E , niu , rho , φ , l , h2 , h3 , Φ , m2 , m3 , m :")
 print("  ",round(T,4),",",round(c,4),",",round(E,4),",",round(niu,4),",",round(rho,4),",",round(D,4),",",round(l,4),",",round(h2,4),",",round(h3,4),",",round(d,4),",",round(m2,4),",",round(m3,4),",",round(m,4))
 print(" ")
@@ -197,14 +195,14 @@ plt.savefig('IL of pipe lagging.png')  # 保存图片文件到当前文件夹
 # 估算噪声降低值并输出（注：实测原噪声 noise_before 已经在开头设定）
 noise_A_weighting_corrections = np.array([-16.1,-8.6,-3.2,0,1.2,1.0,-1.1]) # A计权修正谱
 noise_before_dBA = noise_before + noise_A_weighting_corrections # 获得A计权原噪声
-if np.all(noise_before_dBA_total - noise_before_input) == 0: #判断实测噪声A计权总值是否已经直接输入
-    noise_before_dBA_total = noise_before_input #如果之前输入的实测噪声是A计权总值，那么输入值即为A计权总值
+if np.all(noise_before_dBA_total - noise_before_input) == 0:
+    noise_before_dBA_total = noise_before_dBA_total
 else:
-    noise_before_dBA_total = np.array([   10*np.log10(np.sum(10**(noise_before_dBA/10) ) )   ]) # 如果之前输入的实测噪声是倍频程线性谱噪声，通过该行计算可得到A计权原噪声总值,np.array([])在这里是为了A计权原噪声总值是一维向量，这样在屏幕输出时带有方括号
+    noise_before_dBA_total = 10*np.log10(np.sum(10**(noise_before_dBA/10) ) ) # 获得A计权原噪声总值
 noise_after = noise_before - IL # 获得隔声后的噪声
 noise_after_dBA = noise_after + noise_A_weighting_corrections # 获得隔声后的A计权噪声
-noise_after_dBA_total = np.array([   10*np.log10(np.sum(10**(noise_after_dBA/10) ) )   ]) # 获得隔声后的A计权噪声总值
-noise_reduction_dBA_total = noise_before_dBA_total - noise_after_dBA_total  # 获得A计权总降噪量
+noise_after_dBA_total = 10*np.log10(np.sum(10**(noise_after_dBA/10) ) ) # 获得隔声后的A计权噪声总值
+noise_reduction_dBA_total = noise_before_dBA_total - noise_after_dBA_total # 获得A计权总降噪量
 print(" ")
 print("5. noise reduction estimate:")
 print("   noise_before :    ",noise_before,"dB")
@@ -212,12 +210,9 @@ print("   noise_before_dBA :",noise_before_dBA,"dBA")
 print("   IL :              ",IL,"dB")
 print("   noise_after :     ",noise_after,"dB")
 print("   noise_after_dBA : ",noise_after_dBA,"dBA")
-#print("   noise_before_dBA_total :   ",np.round(noise_before_dBA_total,1),"dBA")
-#print("   noise_after_dBA_total :    ",np.round(noise_after_dBA_total,1),"dBA")
-#print("   noise_reduction_dBA_total :",np.round(noise_reduction_dBA_total,1),"dBA")
-print("   noise_before_dBA_total :   ",noise_before_dBA_total,"dBA")
-print("   noise_after_dBA_total :    ",noise_after_dBA_total,"dBA")
-print("   noise_reduction_dBA_total :",noise_reduction_dBA_total,"dBA")
+print("   noise_before_dBA_total :   ",np.round(noise_before_dBA_total,1),"dBA")
+print("   noise_after_dBA_total :    ",np.round(noise_after_dBA_total,1),"dBA")
+print("   noise_reduction_dBA_total :",np.round(noise_reduction_dBA_total,1),"dBA")
 
 
 exit(0)

@@ -1,10 +1,10 @@
 # NR_of_Enclosures, 可以计算厂房内的隔声罩在各频段的降噪量；已知设备声功率级可以计算罩内外声压级。（物理量使用SI国际单位制）
 '''
 # 该程序的使用方法：在本文件的设置段落里设置需要的变量;
-  在终端(Terminal)里输入“python<"NR_of_Enclosures.py" >NR_report.txt”,回车
+  在终端(Terminal)里输入“python<"NR_of_Enclosures_haier_20200110.py" >NR_report.txt”,回车
 # 输出的文件：文本 NR_report.txt
 # 方法主要参考：[Engineering Noise Control] 5th p407-410；声学技术《基于声电类比的多层结构隔声量算法》
-# 版本：20200110
+# 版本：20191226
 # 作者：魏里来 weililai@foxmail.com
 '''
 
@@ -73,8 +73,6 @@ NR_dBA_total = L_p2_prime_dBA_total - L_p2_dBA_total #总降噪量(隔声前后A
 #计算段落完毕
 
 #输出段落
-print("Prediction of sound insulation performance of Enclosures")
-print(" ")
 print("   r             :    ",r,"m")
 print("   r2            :    ",r2,"m")
 print("   S_E           :    ",S_E,"m2")
@@ -83,11 +81,10 @@ print("   S             :    ",S,"m2")
 print("   D_Theta       :    ",D_Theta)
 print("   alpha_bar_i   :    ",alpha_bar_i)
 print("   alpha_bar     :    ",alpha_bar)
-np.set_printoptions(formatter={'float': '{: 0.1f}'.format})  #设定输出的数值保留一位小数
 print("   TL            :    ",TL,"dB")
 print("   L_W           :    ",L_W,"dB")
-print(" ")
-print("   NR_of_Enclosures :")
+np.set_printoptions(formatter={'float': '{: 0.1f}'.format})  #设定输出的数值保留一位小数
+print("NR_of_Enclosures :")
 print("   f             :    ",f,"/s")
 print("   L_p           :    ",L_p,"dB")
 print("   L_p1          :    ",L_p1,"dB")
